@@ -8,7 +8,16 @@ import shutil
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
-st.set_page_config(page_title="Délais de Paiement", layout="wide")
+# Configuration de la page
+st.set_page_config(
+    page_title="Délais de Paiement | Synergie Experts",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Logo en base64
+LOGO_BASE64 = "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"
 
 # Dossier de cache pour les fichiers uploadés
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache_files")
@@ -38,126 +47,184 @@ def load_cached_file(cache_path):
         pass
     return None
 
-# CSS personnalisé pour une interface plus professionnelle
+# CSS moderne et épuré - Thème Synergie Experts
 st.markdown("""
 <style>
-    /* Style général */
-    .main {
-        background-color: #f8f9fa;
+    /* Variables de couleurs Synergie Experts */
+    :root {
+        --se-gray: #3d3d3d;
+        --se-orange: #f5a623;
+        --se-light-gray: #f7f7f7;
+        --se-white: #ffffff;
+        --se-border: #e0e0e0;
     }
-
-    /* Titre principal */
-    .main-title {
-        background: linear-gradient(90deg, #1e3a5f 0%, #2d5a87 100%);
-        color: white;
-        padding: 1.5rem 2rem;
-        border-radius: 10px;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* Reset et base */
+    .main .block-container {
+        padding-top: 2rem;
+        max-width: 1200px;
     }
-
-    .main-title h1 {
-        margin: 0;
-        font-size: 1.8rem;
+    
+    /* Header avec logo */
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0 1.5rem 0;
+        border-bottom: 3px solid #f5a623;
+        margin-bottom: 2rem;
+    }
+    
+    .header-logo {
+        height: 50px;
+    }
+    
+    .header-title {
+        text-align: right;
+    }
+    
+    .header-title h1 {
+        color: #3d3d3d;
+        font-size: 1.5rem;
         font-weight: 600;
+        margin: 0;
     }
-
-    .main-title p {
-        margin: 0.5rem 0 0 0;
-        opacity: 0.9;
-        font-size: 1rem;
+    
+    .header-title p {
+        color: #888;
+        font-size: 0.9rem;
+        margin: 0.25rem 0 0 0;
     }
-
-    /* Cartes de configuration */
-    .config-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e9ecef;
-        margin-bottom: 1rem;
+    
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #3d3d3d;
     }
-
-    .config-card h3 {
-        color: #1e3a5f;
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-        border-bottom: 2px solid #2d5a87;
-        padding-bottom: 0.5rem;
+    
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] label,
+    [data-testid="stSidebar"] .stTextArea label,
+    [data-testid="stSidebar"] .stFileUploader label {
+        color: #ffffff !important;
     }
-
-    /* Métriques */
-    .metric-container {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        border-left: 4px solid #2d5a87;
+    
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3 {
+        color: #f5a623 !important;
     }
-
+    
     /* Boutons */
     .stButton > button {
-        background: linear-gradient(90deg, #1e3a5f 0%, #2d5a87 100%);
-        color: white;
+        background-color: #f5a623;
+        color: #3d3d3d;
         border: none;
-        padding: 0.75rem 2rem;
+        padding: 0.6rem 1.5rem;
         font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        border-radius: 4px;
+        transition: all 0.2s ease;
     }
-
+    
     .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        background-color: #e09000;
+        color: #ffffff;
     }
-
-    /* File uploader */
-    .stFileUploader {
-        background: white;
-        padding: 1rem;
+    
+    /* Métriques */
+    .metric-card {
+        background: #ffffff;
         border-radius: 8px;
-        border: 2px dashed #dee2e6;
+        padding: 1.25rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border-left: 4px solid #f5a623;
+        margin-bottom: 1rem;
     }
-
-    /* Expander */
-    .streamlit-expanderHeader {
-        background: white;
-        border-radius: 8px;
+    
+    .metric-card h3 {
+        color: #888;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-
-    /* Dataframe */
+    
+    .metric-card .value {
+        color: #3d3d3d;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    /* Status badges */
+    .status-success {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .status-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    /* Tables */
     .stDataFrame {
         border-radius: 8px;
         overflow: hidden;
     }
-
-    /* Section divider */
-    .section-divider {
-        height: 3px;
-        background: linear-gradient(90deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
-        border-radius: 2px;
-        margin: 2rem 0;
-    }
-
-    /* Footer */
-    .footer {
-        background: #1e3a5f;
-        color: white;
-        padding: 1rem;
+    
+    /* File uploader dans sidebar */
+    [data-testid="stSidebar"] [data-testid="stFileUploader"] {
+        background-color: rgba(255,255,255,0.1);
         border-radius: 8px;
-        text-align: center;
-        margin-top: 2rem;
+        padding: 0.5rem;
+    }
+    
+    /* Expander */
+    .streamlit-expanderHeader {
+        background-color: #f7f7f7;
+        border-radius: 8px;
+    }
+    
+    /* Section titles */
+    .section-title {
+        color: #3d3d3d;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 2rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #f5a623;
+    }
+    
+    /* Hide Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
+    /* Divider */
+    .divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 2rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Titre principal stylisé
-st.markdown("""
-<div class="main-title">
-    <h1>Declaration relative aux delais de paiement</h1>
-    <p>Rapprochement Factures - Paiements</p>
+# Header avec logo
+st.markdown(f"""
+<div class="header-container">
+    <img src="data:image/jpeg;base64,{LOGO_BASE64}" class="header-logo" alt="Synergie Experts">
+    <div class="header-title">
+        <h1>Délais de Paiement Fournisseurs</h1>
+        <p>Rapprochement factures - paiements</p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -193,65 +260,65 @@ def save_config(journaux_achat, journaux_banque):
 # Charger la configuration sauvegardée
 config = load_config()
 
-# Interface centrée avec colonnes
-st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-
-col_left, col_center, col_right = st.columns([1, 2, 1])
-
-with col_center:
-    st.markdown('<div class="config-card">', unsafe_allow_html=True)
-    st.markdown("### Fichiers requis")
-
+# ========== SIDEBAR - Configuration ==========
+with st.sidebar:
+    st.markdown(f"""
+        <div style="text-align: center; padding: 1rem 0;">
+            <img src="data:image/jpeg;base64,{LOGO_BASE64}" style="width: 180px;">
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Section Fichiers
+    st.markdown("### 📁 Fichiers")
+    
     # Initialiser session_state pour les fichiers cachés
     if 'gl_loaded_from_cache' not in st.session_state:
         st.session_state.gl_loaded_from_cache = False
     if 'balance_loaded_from_cache' not in st.session_state:
         st.session_state.balance_loaded_from_cache = False
-
-    col_file1, col_file2 = st.columns(2)
-    with col_file1:
-        grand_livre_file = st.file_uploader(
-            "Grand Livre (Excel)",
-            type=['xlsx', 'xls'],
-            help="Colonnes : A=Date, B=Journal, C=Compte, D=N°Pièce, E=Libellé, F=Mvt, G=Facture, I=Lettrage"
-        )
-        # Sauvegarder le fichier uploadé dans le cache
-        if grand_livre_file is not None:
-            save_uploaded_file(grand_livre_file, CACHE_GL_FILE)
-            grand_livre_file.seek(0)  # Remettre le curseur au début
-        # Charger depuis le cache si aucun fichier uploadé
-        elif os.path.exists(CACHE_GL_FILE):
-            cached_gl = load_cached_file(CACHE_GL_FILE)
-            if cached_gl:
-                grand_livre_file = io.BytesIO(cached_gl)
-                grand_livre_file.name = "grand_livre.xlsx"
-                if not st.session_state.gl_loaded_from_cache:
-                    st.info("Grand Livre chargé depuis le cache")
-                    st.session_state.gl_loaded_from_cache = True
-
-    with col_file2:
-        balance_file = st.file_uploader(
-            "Balance des Comptes (Excel)",
-            type=['xlsx', 'xls'],
-            help="Pour récupérer les noms des fournisseurs"
-        )
-        # Sauvegarder le fichier uploadé dans le cache
-        if balance_file is not None:
-            save_uploaded_file(balance_file, CACHE_BALANCE_FILE)
-            balance_file.seek(0)  # Remettre le curseur au début
-        # Charger depuis le cache si aucun fichier uploadé
-        elif os.path.exists(CACHE_BALANCE_FILE):
-            cached_balance = load_cached_file(CACHE_BALANCE_FILE)
-            if cached_balance:
-                balance_file = io.BytesIO(cached_balance)
-                balance_file.name = "balance.xlsx"
-                if not st.session_state.balance_loaded_from_cache:
-                    st.info("Balance chargée depuis le cache")
-                    st.session_state.balance_loaded_from_cache = True
-
+    
+    grand_livre_file = st.file_uploader(
+        "Grand Livre",
+        type=['xlsx', 'xls'],
+        help="Colonnes : A=Date, B=Journal, C=Compte, D=N°Pièce, E=Libellé, F=Mvt, G=Facture, I=Lettrage"
+    )
+    
+    # Sauvegarder le fichier uploadé dans le cache
+    if grand_livre_file is not None:
+        save_uploaded_file(grand_livre_file, CACHE_GL_FILE)
+        grand_livre_file.seek(0)
+    elif os.path.exists(CACHE_GL_FILE):
+        cached_gl = load_cached_file(CACHE_GL_FILE)
+        if cached_gl:
+            grand_livre_file = io.BytesIO(cached_gl)
+            grand_livre_file.name = "grand_livre.xlsx"
+            if not st.session_state.gl_loaded_from_cache:
+                st.success("✓ GL en cache", icon="📄")
+                st.session_state.gl_loaded_from_cache = True
+    
+    balance_file = st.file_uploader(
+        "Balance Fournisseurs",
+        type=['xlsx', 'xls'],
+        help="Pour récupérer les noms des fournisseurs"
+    )
+    
+    if balance_file is not None:
+        save_uploaded_file(balance_file, CACHE_BALANCE_FILE)
+        balance_file.seek(0)
+    elif os.path.exists(CACHE_BALANCE_FILE):
+        cached_balance = load_cached_file(CACHE_BALANCE_FILE)
+        if cached_balance:
+            balance_file = io.BytesIO(cached_balance)
+            balance_file.name = "balance.xlsx"
+            if not st.session_state.balance_loaded_from_cache:
+                st.success("✓ Balance en cache", icon="📄")
+                st.session_state.balance_loaded_from_cache = True
+    
     # Bouton pour effacer le cache
     if os.path.exists(CACHE_GL_FILE) or os.path.exists(CACHE_BALANCE_FILE):
-        if st.button("🗑️ Effacer les fichiers en cache", type="secondary"):
+        if st.button("🗑️ Effacer le cache", use_container_width=True):
             if os.path.exists(CACHE_GL_FILE):
                 os.remove(CACHE_GL_FILE)
             if os.path.exists(CACHE_BALANCE_FILE):
@@ -259,38 +326,33 @@ with col_center:
             st.session_state.gl_loaded_from_cache = False
             st.session_state.balance_loaded_from_cache = False
             st.rerun()
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    st.markdown('<div class="config-card">', unsafe_allow_html=True)
-    st.markdown("### Configuration des Journaux")
-
-    col_j1, col_j2 = st.columns(2)
-    with col_j1:
-        journaux_achat_input = st.text_area(
-            "Journaux d'Achat (un par ligne)",
-            value=config.get("journaux_achat", "ACHAT\nACH"),
-            height=100,
-            key="journaux_achat_input"
-        )
-        journaux_achat = [j.strip() for j in journaux_achat_input.split('\n') if j.strip()]
-
-    with col_j2:
-        journaux_banque_input = st.text_area(
-            "Journaux de Banque (un par ligne)",
-            value=config.get("journaux_banque", "BANQUE\nBNQ\nCHEQUE"),
-            height=100,
-            key="journaux_banque_input"
-        )
-        journaux_banque = [j.strip() for j in journaux_banque_input.split('\n') if j.strip()]
-
-    st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Section Journaux
+    st.markdown("### ⚙️ Journaux")
+    
+    journaux_achat_input = st.text_area(
+        "Journaux d'Achat",
+        value=config.get("journaux_achat", "ACHAT\nACH"),
+        height=80,
+        key="journaux_achat_input",
+        help="Un code journal par ligne"
+    )
+    journaux_achat = [j.strip() for j in journaux_achat_input.split('\n') if j.strip()]
+    
+    journaux_banque_input = st.text_area(
+        "Journaux de Banque",
+        value=config.get("journaux_banque", "BANQUE\nBNQ\nCHEQUE"),
+        height=80,
+        key="journaux_banque_input",
+        help="Un code journal par ligne"
+    )
+    journaux_banque = [j.strip() for j in journaux_banque_input.split('\n') if j.strip()]
 
 # Sauvegarder la configuration si elle a changé
 if journaux_achat_input != config.get("journaux_achat") or journaux_banque_input != config.get("journaux_banque"):
     save_config(journaux_achat_input, journaux_banque_input)
-
-st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
 # Fonction pour charger le grand livre (sans en-tête)
 @st.cache_data
@@ -1965,32 +2027,41 @@ if grand_livre_file and balance_file:
 
         dict_fournisseurs, col_compte, col_nom = creer_dict_fournisseurs(balance_df, has_header)
 
-        st.success("Fichiers chargés avec succès !")
+        st.success("✓ Fichiers chargés avec succès")
 
-        # Métriques dans des cartes
+        # Métriques dans des cartes modernes
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric("Lignes Grand Livre", f"{len(grand_livre_df):,}".replace(',', ' '))
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+                <div class="metric-card">
+                    <h3>Lignes Grand Livre</h3>
+                    <p class="value">{len(grand_livre_df):,}</p>
+                </div>
+            '''.replace(',', ' '), unsafe_allow_html=True)
         with col2:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric("Fournisseurs", f"{len(dict_fournisseurs):,}".replace(',', ' '))
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+                <div class="metric-card">
+                    <h3>Fournisseurs</h3>
+                    <p class="value">{len(dict_fournisseurs):,}</p>
+                </div>
+            '''.replace(',', ' '), unsafe_allow_html=True)
         with col3:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric("Journaux Achat", len(journaux_achat))
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+                <div class="metric-card">
+                    <h3>Journaux Achat</h3>
+                    <p class="value">{len(journaux_achat)}</p>
+                </div>
+            ''', unsafe_allow_html=True)
 
-        with st.expander("Aperçu du Grand Livre", expanded=False):
+        with st.expander("📋 Aperçu du Grand Livre", expanded=False):
             st.dataframe(grand_livre_df.head(20), use_container_width=True)
 
-        with st.expander("Aperçu de la Balance", expanded=False):
+        with st.expander("📋 Aperçu de la Balance", expanded=False):
             st.info(f"Colonnes detectees - Compte: **{col_compte}**, Nom: **{col_nom}**")
             st.dataframe(balance_df.head(20), use_container_width=True)
 
             if dict_fournisseurs:
-                st.markdown("**Mapping Compte -> Fournisseur (10 premiers)**")
+                st.markdown("**Mapping Compte → Fournisseur (10 premiers)**")
                 mapping_preview = list(dict_fournisseurs.items())[:10]
                 mapping_df = pd.DataFrame(mapping_preview, columns=['N° Compte', 'Nom Fournisseur'])
                 st.dataframe(mapping_df, use_container_width=True)
@@ -2000,16 +2071,16 @@ if grand_livre_file and balance_file:
         comptes_non_trouves = comptes_gl - comptes_trouves
 
         if comptes_non_trouves:
-            with st.expander(f"{len(comptes_non_trouves)} compte(s) non trouve(s) dans la balance", expanded=False):
+            with st.expander(f"⚠️ {len(comptes_non_trouves)} compte(s) non trouvé(s) dans la balance", expanded=False):
                 st.warning("Ces comptes du Grand Livre n'ont pas de correspondance :")
                 st.write(sorted(list(comptes_non_trouves))[:20])
 
-        st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+        st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
         # Bouton centré
         col_btn_left, col_btn_center, col_btn_right = st.columns([1, 2, 1])
         with col_btn_center:
-            if st.button("Lancer le rapprochement", type="primary", use_container_width=True):
+            if st.button("🚀 Lancer le rapprochement", type="primary", use_container_width=True):
                 with st.spinner("Traitement en cours..."):
                     resultats_df = traiter_rapprochement(
                         grand_livre_df,
@@ -2018,7 +2089,7 @@ if grand_livre_file and balance_file:
                         journaux_banque
                     )
 
-                st.success(f"Rapprochement termine ! **{len(resultats_df)} lignes** generees")
+                st.success(f"✓ Rapprochement terminé ! **{len(resultats_df)} lignes** générées")
 
                 # Calcul du solde attendu depuis le grand livre
                 gl_4411 = grand_livre_df[grand_livre_df['Compte'].astype(str).str.startswith('4411')]
@@ -2030,6 +2101,7 @@ if grand_livre_file and balance_file:
                 solde_calcule = resultats_df['Solde'].sum()
 
                 # Statistiques
+                st.markdown('<p class="section-title">📊 Statistiques</p>', unsafe_allow_html=True)
                 col1, col2, col3, col4 = st.columns(4)
 
                 factures_payees = len(resultats_df[resultats_df['Date de paiement'].notna()])
@@ -2037,9 +2109,9 @@ if grand_livre_file and balance_file:
                 paiements_sans_facture = len(resultats_df[resultats_df['Date de facture'].isna()])
 
                 with col1:
-                    st.metric("Factures payees", factures_payees)
+                    st.metric("Factures payées", factures_payees)
                 with col2:
-                    st.metric("Factures non payees", factures_non_payees)
+                    st.metric("Factures non payées", factures_non_payees)
                 with col3:
                     st.metric("Paiements sans facture", paiements_sans_facture)
                 with col4:
@@ -2047,7 +2119,7 @@ if grand_livre_file and balance_file:
                     st.metric("Total factures", f"{total_montant:,.2f} MAD".replace(',', ' ').replace('.', ','))
 
                 # Vérification du solde
-                st.markdown("### Verification du solde")
+                st.markdown('<p class="section-title">✅ Vérification du solde</p>', unsafe_allow_html=True)
                 col_v1, col_v2, col_v3 = st.columns(3)
                 with col_v1:
                     st.metric("Total Colonne G (Factures)", f"{total_g:,.2f}".replace(',', ' ').replace('.', ','))
