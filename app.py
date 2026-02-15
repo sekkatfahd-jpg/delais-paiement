@@ -16,9 +16,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Logo en base64
-LOGO_BASE64 = "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"
-
 # Dossier de cache pour les fichiers uploadés
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache_files")
 CACHE_GL_FILE = os.path.join(CACHE_DIR, "grand_livre.xlsx")
@@ -61,22 +58,40 @@ st.markdown("""
     
     /* Reset et base */
     .main .block-container {
-        padding-top: 2rem;
+        padding-top: 1rem;
         max-width: 1200px;
     }
     
-    /* Header avec logo */
+    /* Header stylisé */
     .header-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 0 1.5rem 0;
+        padding: 1.5rem 0;
         border-bottom: 3px solid #f5a623;
         margin-bottom: 2rem;
     }
     
     .header-logo {
-        height: 50px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .header-logo .synergie {
+        color: #3d3d3d;
+    }
+    
+    .header-logo .experts {
+        color: #f5a623;
+    }
+    
+    .header-logo .tagline {
+        font-size: 0.7rem;
+        color: #888;
+        font-weight: 400;
+        display: block;
+        margin-top: 2px;
     }
     
     .header-title {
@@ -85,14 +100,14 @@ st.markdown("""
     
     .header-title h1 {
         color: #3d3d3d;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 600;
         margin: 0;
     }
     
     .header-title p {
         color: #888;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         margin: 0.25rem 0 0 0;
     }
     
@@ -142,7 +157,7 @@ st.markdown("""
     
     .metric-card h3 {
         color: #888;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 500;
         margin: 0 0 0.5rem 0;
         text-transform: uppercase;
@@ -151,41 +166,15 @@ st.markdown("""
     
     .metric-card .value {
         color: #3d3d3d;
-        font-size: 1.75rem;
+        font-size: 1.6rem;
         font-weight: 700;
         margin: 0;
-    }
-    
-    /* Status badges */
-    .status-success {
-        background-color: #d4edda;
-        color: #155724;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-    
-    .status-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
     }
     
     /* Tables */
     .stDataFrame {
         border-radius: 8px;
         overflow: hidden;
-    }
-    
-    /* File uploader dans sidebar */
-    [data-testid="stSidebar"] [data-testid="stFileUploader"] {
-        background-color: rgba(255,255,255,0.1);
-        border-radius: 8px;
-        padding: 0.5rem;
     }
     
     /* Expander */
@@ -197,9 +186,9 @@ st.markdown("""
     /* Section titles */
     .section-title {
         color: #3d3d3d;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        margin: 2rem 0 1rem 0;
+        margin: 1.5rem 0 1rem 0;
         padding-bottom: 0.5rem;
         border-bottom: 2px solid #f5a623;
     }
@@ -214,13 +203,42 @@ st.markdown("""
         background: #e0e0e0;
         margin: 2rem 0;
     }
+    
+    /* Sidebar logo */
+    .sidebar-logo {
+        text-align: center;
+        padding: 1rem 0 0.5rem 0;
+    }
+    
+    .sidebar-logo .brand {
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    
+    .sidebar-logo .synergie {
+        color: #ffffff;
+    }
+    
+    .sidebar-logo .experts {
+        color: #f5a623;
+    }
+    
+    .sidebar-logo .tagline {
+        font-size: 0.65rem;
+        color: #aaa;
+        display: block;
+        margin-top: 2px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# Header avec logo
-st.markdown(f"""
+# Header
+st.markdown("""
 <div class="header-container">
-    <img src="data:image/jpeg;base64,{LOGO_BASE64}" class="header-logo" alt="Synergie Experts">
+    <div class="header-logo">
+        <span class="synergie">Synergie</span><span class="experts">experts</span>
+        <span class="tagline">conseil / expertise comptable / audit</span>
+    </div>
     <div class="header-title">
         <h1>Délais de Paiement Fournisseurs</h1>
         <p>Rapprochement factures - paiements</p>
@@ -262,9 +280,10 @@ config = load_config()
 
 # ========== SIDEBAR - Configuration ==========
 with st.sidebar:
-    st.markdown(f"""
-        <div style="text-align: center; padding: 1rem 0;">
-            <img src="data:image/jpeg;base64,{LOGO_BASE64}" style="width: 180px;">
+    st.markdown("""
+        <div class="sidebar-logo">
+            <span class="brand"><span class="synergie">Synergie</span><span class="experts">experts</span></span>
+            <span class="tagline">conseil / expertise comptable / audit</span>
         </div>
     """, unsafe_allow_html=True)
     
