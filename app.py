@@ -47,33 +47,25 @@ def load_cached_file(cache_path):
 # CSS moderne et épuré - Thème Synergie Experts
 st.markdown("""
 <style>
-    /* Variables de couleurs Synergie Experts */
-    :root {
-        --se-gray: #3d3d3d;
-        --se-orange: #f5a623;
-        --se-light-gray: #f7f7f7;
-        --se-white: #ffffff;
-        --se-border: #e0e0e0;
-    }
-    
-    /* Reset et base */
+    /* Reset et base - très compact */
     .main .block-container {
-        padding-top: 1rem;
-        max-width: 1200px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        max-width: 1400px;
     }
     
-    /* Header stylisé */
+    /* Header très compact */
     .header-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1.5rem 0;
+        padding: 0.5rem 0;
         border-bottom: 3px solid #f5a623;
-        margin-bottom: 2rem;
+        margin-bottom: 0.75rem;
     }
     
     .header-logo {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 700;
         margin: 0;
     }
@@ -87,11 +79,11 @@ st.markdown("""
     }
     
     .header-logo .tagline {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         color: #888;
         font-weight: 400;
         display: block;
-        margin-top: 2px;
+        margin-top: 1px;
     }
     
     .header-title {
@@ -100,33 +92,20 @@ st.markdown("""
     
     .header-title h1 {
         color: #3d3d3d;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 600;
         margin: 0;
     }
     
     .header-title p {
         color: #888;
-        font-size: 0.85rem;
-        margin: 0.25rem 0 0 0;
+        font-size: 0.8rem;
+        margin: 0.2rem 0 0 0;
     }
     
-    /* Sidebar */
+    /* Cacher la sidebar */
     [data-testid="stSidebar"] {
-        background-color: #3d3d3d;
-    }
-    
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] label,
-    [data-testid="stSidebar"] .stTextArea label,
-    [data-testid="stSidebar"] .stFileUploader label {
-        color: #ffffff !important;
-    }
-    
-    [data-testid="stSidebar"] h1, 
-    [data-testid="stSidebar"] h2, 
-    [data-testid="stSidebar"] h3 {
-        color: #f5a623 !important;
+        display: none;
     }
     
     /* Boutons */
@@ -134,7 +113,7 @@ st.markdown("""
         background-color: #f5a623;
         color: #3d3d3d;
         border: none;
-        padding: 0.6rem 1.5rem;
+        padding: 0.5rem 1.5rem;
         font-weight: 600;
         border-radius: 4px;
         transition: all 0.2s ease;
@@ -149,26 +128,44 @@ st.markdown("""
     .metric-card {
         background: #ffffff;
         border-radius: 8px;
-        padding: 1.25rem;
+        padding: 1rem;
         box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         border-left: 4px solid #f5a623;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
     }
     
     .metric-card h3 {
         color: #888;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 500;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.4rem 0;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
     
     .metric-card .value {
         color: #3d3d3d;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 700;
         margin: 0;
+    }
+    
+    /* Config box */
+    .config-box {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 0.75rem;
+    }
+    
+    .config-box h4 {
+        color: #3d3d3d;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #f5a623;
     }
     
     /* Tables */
@@ -177,57 +174,47 @@ st.markdown("""
         overflow: hidden;
     }
     
-    /* Expander */
+    /* Expander compact */
     .streamlit-expanderHeader {
         background-color: #f7f7f7;
-        border-radius: 8px;
+        border-radius: 6px;
+        font-size: 0.9rem;
     }
     
     /* Section titles */
     .section-title {
         color: #3d3d3d;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
-        margin: 1.5rem 0 1rem 0;
-        padding-bottom: 0.5rem;
+        margin: 1rem 0 0.75rem 0;
+        padding-bottom: 0.4rem;
         border-bottom: 2px solid #f5a623;
     }
     
     /* Hide Streamlit branding */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
+    header {visibility: hidden;}
     
-    /* Divider */
+    /* Divider compact */
     .divider {
         height: 1px;
         background: #e0e0e0;
-        margin: 2rem 0;
+        margin: 1rem 0;
     }
     
-    /* Sidebar logo */
-    .sidebar-logo {
-        text-align: center;
-        padding: 1rem 0 0.5rem 0;
+    /* File uploader compact */
+    [data-testid="stFileUploader"] {
+        padding: 0;
     }
     
-    .sidebar-logo .brand {
-        font-size: 1.3rem;
-        font-weight: 700;
+    [data-testid="stFileUploader"] section {
+        padding: 0.5rem;
     }
     
-    .sidebar-logo .synergie {
-        color: #ffffff;
-    }
-    
-    .sidebar-logo .experts {
-        color: #f5a623;
-    }
-    
-    .sidebar-logo .tagline {
-        font-size: 0.65rem;
-        color: #aaa;
-        display: block;
-        margin-top: 2px;
+    /* Text area compact */
+    .stTextArea textarea {
+        font-size: 0.85rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -278,30 +265,23 @@ def save_config(journaux_achat, journaux_banque):
 # Charger la configuration sauvegardée
 config = load_config()
 
-# ========== SIDEBAR - Configuration ==========
-with st.sidebar:
-    st.markdown("""
-        <div class="sidebar-logo">
-            <span class="brand"><span class="synergie">Synergie</span><span class="experts">experts</span></span>
-            <span class="tagline">conseil / expertise comptable / audit</span>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Section Fichiers
-    st.markdown("### 📁 Fichiers")
-    
-    # Initialiser session_state pour les fichiers cachés
-    if 'gl_loaded_from_cache' not in st.session_state:
-        st.session_state.gl_loaded_from_cache = False
-    if 'balance_loaded_from_cache' not in st.session_state:
-        st.session_state.balance_loaded_from_cache = False
+# Initialiser session_state pour les fichiers cachés
+if 'gl_loaded_from_cache' not in st.session_state:
+    st.session_state.gl_loaded_from_cache = False
+if 'balance_loaded_from_cache' not in st.session_state:
+    st.session_state.balance_loaded_from_cache = False
+
+# ========== ZONE DE CONFIGURATION (dans la page principale) ==========
+col_files, col_journals = st.columns([1, 1])
+
+with col_files:
+    st.markdown('<div class="config-box"><h4>📁 Fichiers à charger</h4>', unsafe_allow_html=True)
     
     grand_livre_file = st.file_uploader(
-        "Grand Livre",
+        "Grand Livre (Excel)",
         type=['xlsx', 'xls'],
-        help="Colonnes : A=Date, B=Journal, C=Compte, D=N°Pièce, E=Libellé, F=Mvt, G=Facture, I=Lettrage"
+        help="Colonnes : A=Date, B=Journal, C=Compte, D=N°Pièce, E=Libellé, F=Mvt, G=Facture, I=Lettrage",
+        key="gl_uploader"
     )
     
     # Sauvegarder le fichier uploadé dans le cache
@@ -313,14 +293,12 @@ with st.sidebar:
         if cached_gl:
             grand_livre_file = io.BytesIO(cached_gl)
             grand_livre_file.name = "grand_livre.xlsx"
-            if not st.session_state.gl_loaded_from_cache:
-                st.success("✓ GL en cache", icon="📄")
-                st.session_state.gl_loaded_from_cache = True
     
     balance_file = st.file_uploader(
-        "Balance Fournisseurs",
+        "Balance Fournisseurs (Excel)",
         type=['xlsx', 'xls'],
-        help="Pour récupérer les noms des fournisseurs"
+        help="Pour récupérer les noms des fournisseurs",
+        key="balance_uploader"
     )
     
     if balance_file is not None:
@@ -331,43 +309,44 @@ with st.sidebar:
         if cached_balance:
             balance_file = io.BytesIO(cached_balance)
             balance_file.name = "balance.xlsx"
-            if not st.session_state.balance_loaded_from_cache:
-                st.success("✓ Balance en cache", icon="📄")
-                st.session_state.balance_loaded_from_cache = True
     
     # Bouton pour effacer le cache
     if os.path.exists(CACHE_GL_FILE) or os.path.exists(CACHE_BALANCE_FILE):
-        if st.button("🗑️ Effacer le cache", use_container_width=True):
+        if st.button("🗑️ Effacer le cache", key="clear_cache"):
             if os.path.exists(CACHE_GL_FILE):
                 os.remove(CACHE_GL_FILE)
             if os.path.exists(CACHE_BALANCE_FILE):
                 os.remove(CACHE_BALANCE_FILE)
-            st.session_state.gl_loaded_from_cache = False
-            st.session_state.balance_loaded_from_cache = False
             st.rerun()
     
-    st.markdown("---")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with col_journals:
+    st.markdown('<div class="config-box"><h4>⚙️ Configuration des Journaux</h4>', unsafe_allow_html=True)
     
-    # Section Journaux
-    st.markdown("### ⚙️ Journaux")
+    col_j1, col_j2 = st.columns(2)
     
-    journaux_achat_input = st.text_area(
-        "Journaux d'Achat",
-        value=config.get("journaux_achat", "ACHAT\nACH"),
-        height=80,
-        key="journaux_achat_input",
-        help="Un code journal par ligne"
-    )
-    journaux_achat = [j.strip() for j in journaux_achat_input.split('\n') if j.strip()]
+    with col_j1:
+        journaux_achat_input = st.text_area(
+            "Journaux d'Achat",
+            value=config.get("journaux_achat", "ACHAT\nACH"),
+            height=100,
+            key="journaux_achat_input",
+            help="Un code journal par ligne"
+        )
+        journaux_achat = [j.strip() for j in journaux_achat_input.split('\n') if j.strip()]
     
-    journaux_banque_input = st.text_area(
-        "Journaux de Banque",
-        value=config.get("journaux_banque", "BANQUE\nBNQ\nCHEQUE"),
-        height=80,
-        key="journaux_banque_input",
-        help="Un code journal par ligne"
-    )
-    journaux_banque = [j.strip() for j in journaux_banque_input.split('\n') if j.strip()]
+    with col_j2:
+        journaux_banque_input = st.text_area(
+            "Journaux de Banque",
+            value=config.get("journaux_banque", "BANQUE\nBNQ\nCHEQUE"),
+            height=100,
+            key="journaux_banque_input",
+            help="Un code journal par ligne"
+        )
+        journaux_banque = [j.strip() for j in journaux_banque_input.split('\n') if j.strip()]
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Sauvegarder la configuration si elle a changé
 if journaux_achat_input != config.get("journaux_achat") or journaux_banque_input != config.get("journaux_banque"):
@@ -2195,11 +2174,9 @@ if grand_livre_file and balance_file:
         st.exception(e)
 
 else:
-    col_info_left, col_info_center, col_info_right = st.columns([1, 2, 1])
-    with col_info_center:
-        st.info("Veuillez charger le Grand Livre et la Balance des Comptes pour commencer.")
+    st.info("👆 Veuillez charger le Grand Livre et la Balance des Comptes ci-dessus pour commencer.")
 
-    with st.expander("Instructions d'utilisation", expanded=True):
+    with st.expander("📖 Instructions d'utilisation", expanded=False):
         st.markdown("""
         ### Comment utiliser cet outil ?
 
@@ -2229,9 +2206,9 @@ else:
         | **OD** | Journaux autres que achat/banque avec lettrage |
         """)
 
-# Footer
+# Footer compact
 st.markdown("""
-<div class="footer">
-    <strong>Expert-Comptable Morocco</strong> | Outil de declaration des delais de paiement
+<div style="text-align: center; color: #888; font-size: 0.75rem; margin-top: 1rem; padding: 0.5rem;">
+    Synergie Experts © 2025 | Outil de déclaration des délais de paiement
 </div>
 """, unsafe_allow_html=True)
