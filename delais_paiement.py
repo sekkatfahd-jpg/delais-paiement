@@ -1649,11 +1649,15 @@ def traiter_rapprochement(grand_livre_df, dict_fournisseurs, journaux_achat, jou
         return False
     
     # Exclure les paiements qui appartiennent à des groupes lettrés sans factures 'ac'
-    masque_exclure = paiements_non_lettres_raw.apply(paiement_est_dans_groupe_sans_factures, axis=1)
-    paiements_non_lettres = paiements_non_lettres_raw[~masque_exclure].copy()
+    if len(paiements_non_lettres_raw) > 0:
+        masque_exclure = paiements_non_lettres_raw.apply(paiement_est_dans_groupe_sans_factures, axis=1)
+        paiements_non_lettres = paiements_non_lettres_raw[~masque_exclure].copy()
+    else:
+        paiements_non_lettres = paiements_non_lettres_raw.copy()
 
-    # Trier les paiements non lettrés par date
-    paiements_non_lettres = paiements_non_lettres.sort_values('Date')
+    # Trier les paiements non lettrés par date (seulement si non vide)
+    if len(paiements_non_lettres) > 0:
+        paiements_non_lettres = paiements_non_lettres.sort_values('Date')
 
     # Suivre les affectations ET les montants restants des paiements
     affectations_paiements = {}  # clé = index dans factures_solde_restant
